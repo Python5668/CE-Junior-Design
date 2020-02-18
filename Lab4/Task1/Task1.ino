@@ -13,16 +13,16 @@ void loop() {
   Serial.end();
 }
 */
-// Just ambient light: 403
-// ambient w/ LED: 705
-// Middle point: 554
+// Just ambient light: 437
+// ambient w/ LED: 713
+// Middle point: 575
 
 // Test 2: photocell sensing code w/ PID control and serial plot in arduino plotter
 float kp = 0.1, ki = 0, kd = 0;
 float error = 0, prevError = 0;
 float P = 0, I = 0, D = 0;
 float PID_val = 0;
-int setpoint = 554;
+int setpoint = 575;
 float initialVal = 10;
 
 void setup () {
@@ -38,9 +38,7 @@ void loop() {
   I =+ error;
   D = error - prevError;
   prevError = error;
-  
-  PID_val = P*I*D;
-  
+  PID_val = (kp*P+ki*I+kd*D)*prevError;
   analogWrite(3, PID_val);
   Serial.print(setpoint);
   Serial.print(" ");
